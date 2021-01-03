@@ -1,0 +1,22 @@
+{
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "Generator to creat a team profile info",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wdavonta/Team-Profile-Generator.git"
+  },
+  "author": "Da'Vonta Williamson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wdavonta/Team-Profile-Generator/issues"
+  },
+  "homepage": "https://github.com/wdavonta/Team-Profile-Generator#readme"
+}
