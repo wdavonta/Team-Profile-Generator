@@ -104,12 +104,12 @@ return inquirer
      
      if (addPerson === 'Yes')
         return promptUser();
-    }
-})
-    }
-    
-    
+    });
 
+
+    
+    
+}
 
 
 promptUser()
