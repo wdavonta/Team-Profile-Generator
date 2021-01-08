@@ -1,4 +1,4 @@
-const inquier = require ('inquirer');
+const inquirer = require ('inquirer');
 
 const Employee = require ('./lib/Employee');
 const Manager = require ('./lib/Manager');
@@ -6,8 +6,8 @@ const Engineer = require ('./lib/Engineer');
 const Intern = require ('./lib/Intern');
 const generatePage = require('./src/page-template');
 const writeFile = require('./utlis/generate-site');
-const inquirer = require('inquirer');
-const render = require('./dist/render');
+
+
 
 
 
@@ -165,7 +165,10 @@ function createIntern(name, id, email) {
 
 
     function buildTeam () {
-        fs.writeFileSync(render(teamMembers), "utf-8");
+        fs.writeFile('.dist/teamFile.html', generatePage(team), function(err) {
+            if (err) throw err;
+        });
+        console.log('File Created',);
     
     }
 
@@ -176,4 +179,4 @@ promptUser()
     // })
     // .then(pageHTML => {
     //     return writeFile(pageHTML);
-    // }
+    // })
