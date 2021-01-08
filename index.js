@@ -7,8 +7,13 @@ const Intern = require ('./lib/Intern');
 const generatePage = require('./src/page-template');
 const writeFile = require('./utlis/generate-site');
 const inquirer = require('inquirer');
+const render = require('./dist/render');
+
+
 
 const team = [];
+
+
 
 const promptUser = () => {
 return inquirer
@@ -77,7 +82,7 @@ function createManager(name, id, email) {
         // Add our new OBJECT to our TEAM array
         team.push(newManager);
 
-        // IF you watned to you could make this its own function
+       
         inquirer.prompt({
             type: 'list',
             name: 'addPerson',
@@ -89,7 +94,7 @@ function createManager(name, id, email) {
                 promptUser();
             } else {
                 // Run our buildTeam function -> Create our HTML Template
-                // buildTeam();
+                buildTeam();
             }
         })
     });
@@ -121,7 +126,7 @@ function createEngineer(name, id, email) {
             if(addPerson == 'Yes') {
                 promptUser();
             } else {
-
+                buildTeam();
             }
         })
     });
@@ -152,12 +157,17 @@ function createIntern(name, id, email) {
             if(addPerson == 'Yes') {
                 promptUser();
             } else {
-
+                buildTeam();
             }
         })
     });
     }
 
+
+    function buildTeam () {
+        fs.writeFileSync(render(teamMembers), "utf-8");
+    
+    }
 
 
 promptUser()
