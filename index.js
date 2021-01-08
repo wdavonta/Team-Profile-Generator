@@ -5,7 +5,10 @@ const Manager = require ('./lib/Manager');
 const Engineer = require ('./lib/Engineer');
 const Intern = require ('./lib/Intern');
 const generatePage = require('./src/page-template');
-const writeFile = require('./utils/generate-site')
+const writeFile = require('./utlis/generate-site');
+const inquirer = require('inquirer');
+
+const team = [];
 
 const promptUser = () => {
 return inquirer
@@ -29,93 +32,138 @@ return inquirer
         type: 'list',
         name: 'position',
         message: 'What is your position?',
-        choices: ['Intern, Manager, Engineer']
+        choices: ['Intern', 'Manager', 'Engineer']
     }])
+    .then(({name, id , email, position}) => {
 
-    .then(({employee, id , email, position}) => {
-        if (position === "Manager")
-        return inquirer
-    
+        //  See what type of OBJECT we need to create
+        if (position === "Manager") {
+            // call our createManager() function
+            createManager(name, id ,email)
+        } 
 
-    .prompt ([
-    {
-        type: 'text',
-        name: 'officenumber',
-       message: 'What is your office number?'
-    },
-    {
-        type: 'list',
-        name: 'addPerson',
-        message: 'Would you like to add another person?',
-        choices: ['Yes', 'No']
-    }])
-    .then(({officenumber, addPerson}) => {
-         manager.push(new Manager(employee, id, email, officenumber))
-         if (addPerson === 'Yes') {
-             inquirerTeam();
-  
+        if (position === "Engineer") {
+            // call our createManager() function
+            createEngineer(name, id ,email)
+        }
 
-        return promptUser();
+        if (position === "Intern") {
+            // call our createManager() function
+            createIntern(name, id ,email)
+        }
         
-    
-    
-} else if (position === "Engineer") {
-    return inquirer
-
-    .prompt ([
-    {
-        type: 'text',
-        name: 'Github',
-        message: 'What is your github?'
-    },
-    {
-        type: 'list',
-        name: 'addPerson',
-        message: 'Would you like to add another person?',
-        choices: ['Yes', 'No']
-    }])
-    
-    .then(({github, addPerson}) => {
-        //const engineer = new Engineer(employee, id, email, github);
-        engineer.push(new Engineer(employee, id, email, github))
-        // return inquirerTeam();
-        if (addPerson === 'Yes') {
-            
-            return promptUser();
-        
-} else if (role === 'Intern') {
-
-    return inquirer
-    .prompt ([
-    {
-        type: 'text',
-        name: 'school',
-        mesage: 'What school did you attend?'
-    },
-    {
-        type: 'list',
-        name: 'addPerson',
-        message: 'Would you like to add another person?',
-        choices: ['Yes', 'No']
-    }])
-    .then(({school,addPerson}) => {
-     //   const intern = new Intern(employee, id, email, school);
-     intern.push(new Intern(employee, id, email, school))
-     
-     if (addPerson === 'Yes')
-        return promptUser();
     });
-
-
-    
-    
 }
+
+function createManager(name, id, email) {
+    // Verify that we are getting the previously gathered data
+    console.log(name, id, email);
+
+    // Prompt for that extra peice of data BEFORE we create the new OBJECT 
+    inquirer.prompt([
+        {
+            type: 'text',
+            name: 'officenumber',
+            message: 'What is your office number?'
+        }
+    ])
+    .then(({officenumber}) => {
+        // verify the data the User entered
+        console.log(officenumber);
+        // Create our new OBJECT
+        var newManager = new Manager(name, id, email, officenumber);
+        // verify 
+        console.log(newManager);
+        // Add our new OBJECT to our TEAM array
+        team.push(newManager);
+
+        // IF you watned to you could make this its own function
+        inquirer.prompt({
+            type: 'list',
+            name: 'addPerson',
+            message: 'Would you like to add another person?',
+            choices: ['Yes', 'No']
+        }).then(({addPerson}) => {
+            // Conditional Test
+            if(addPerson == 'Yes') {
+                promptUser();
+            } else {
+                // Run our buildTeam function -> Create our HTML Template
+                // buildTeam();
+            }
+        })
+    });
+}
+
+// Create our Engineer OBJECT
+function createEngineer(name, id, email) {
+    inquirer.prompt ([
+        {
+            type: 'text',
+            name: 'Github',
+            message:'What is your Github?'
+        }
+    ])
+
+    .then(({Github}) => {
+
+        var newEngineer = new Engineer(name, id, email, Github);
+
+        team.push(newEngineer);
+
+        inquirer.prompt({
+            typer: 'list',
+            name: 'addPerson',
+            message: 'Would you like to add another person?',
+            choices: ['Yes', 'No']
+        }).then(({addPerson}) => {
+
+            if(addPerson == 'Yes') {
+                promptUser();
+            } else {
+
+            }
+        })
+    });
+}
+        
+
+// Create our Intern OBJECT
+function createIntern(name, id, email) {
+
+    inquirer.prompt([
+        {
+            type: 'test',
+            name: 'school',
+            message: 'What school did you attend?'
+        }
+    ])
+    .then(({school}) => {
+        
+        var newIntern = new Intern(name, id, email, school);
+        team.push(newIntern);
+
+        inquirer.prompt({
+            type: 'list',
+            name: 'addPerson',
+            message: 'Would you like to add another person?',
+            choices: ['Yes', 'No']
+        }).then(({addPerson}) => {
+            if(addPerson == 'Yes') {
+                promptUser();
+            } else {
+
+            }
+        })
+    });
+    }
+
 
 
 promptUser()
-    .then(fileData => {
-        return generatePage(fileData);
-    })
-    .then(pageHTML => {
-        return writeFile(pageHTML);
-    })
+    // .then(fileData => {
+    //     return generatePage(fileData);
+    // })
+    // .then(pageHTML => {
+    //     return writeFile(pageHTML);
+    // }
