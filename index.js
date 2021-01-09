@@ -1,11 +1,11 @@
 const inquirer = require ('inquirer');
-
+const fs = require ('fs');
 const Employee = require ('./lib/Employee');
 const Manager = require ('./lib/Manager');
 const Engineer = require ('./lib/Engineer');
 const Intern = require ('./lib/Intern');
 const generatePage = require('./src/page-template');
-const writeFile = require('./utlis/generate-site');
+
 
 
 
@@ -165,18 +165,19 @@ function createIntern(name, id, email) {
 
 
     function buildTeam () {
-        fs.writeFile('.dist/teamFile.html', generatePage(team), function(err) {
-            if (err) throw err;
-        });
+        fs.writeFile('./dist/teamFile.html', generatePage(team), err => {
+            if (err) { throw err
+        };
         console.log('File Created',);
     
-    }
+    });
+};
 
 
 promptUser()
-    // .then(fileData => {
-    //     return generatePage(fileData);
-    // })
-    // .then(pageHTML => {
-    //     return writeFile(pageHTML);
-    // })
+    .then(fileData => {
+        return generatePage(fileData);
+    })
+    .then(pageHTML => {
+        return  buildTeam(pageHTML);
+    });
