@@ -1,19 +1,19 @@
 const inquirer = require ('inquirer');
 const fs = require ('fs');
-const Employee = require ('./lib/Employee');
 const Manager = require ('./lib/Manager');
 const Engineer = require ('./lib/Engineer');
 const Intern = require ('./lib/Intern');
 const generatePage = require('./src/page-template');
+const {writeFile} = require ('./utlis/generate-site');
 
+let manager = [];
+let intern = [];
+let engineer = [];
+let team =[];
 
+let employeeArr = {manager, intern, engineer};
 
-
-
-
-const team = [];
-
-
+// const team = [];
 
 const promptUser = () => {
 return inquirer
@@ -61,8 +61,7 @@ return inquirer
 }
 
 function createManager(name, id, email) {
-    // Verify that we are getting the previously gathered data
-    console.log(name, id, email);
+
 
     // Prompt for that extra peice of data BEFORE we create the new OBJECT 
     inquirer.prompt([
@@ -117,7 +116,7 @@ function createEngineer(name, id, email) {
         team.push(newEngineer);
 
         inquirer.prompt({
-            typer: 'list',
+            type: 'list',
             name: 'addPerson',
             message: 'Would you like to add another person?',
             choices: ['Yes', 'No']
@@ -138,7 +137,7 @@ function createIntern(name, id, email) {
 
     inquirer.prompt([
         {
-            type: 'test',
+            type: 'text',
             name: 'school',
             message: 'What school did you attend?'
         }
@@ -164,20 +163,24 @@ function createIntern(name, id, email) {
     }
 
 
-    function buildTeam () {
-        fs.writeFile('./dist/teamFile.html', generatePage(team), err => {
-            if (err) { throw err
-        };
-        console.log('File Created',);
+     const buildTeam = () => {
+//         fs.writeFile('./dist/teamFile.html', generatePage, err =>  {
+//             if (err) { throw err;
+//         };
+//         console.log('File Created');
     
-    });
-};
+//     });
+ }
 
 
-promptUser()
+
+ promptUser()
     .then(fileData => {
-        return generatePage(fileData);
+        return generatePage(employeeArr);
     })
     .then(pageHTML => {
-        return  buildTeam(pageHTML);
-    });
+        return writeFile(pageHTML);
+    })
+.catch(err => {
+console.log(err);
+});

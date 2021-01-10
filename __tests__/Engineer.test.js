@@ -1,5 +1,5 @@
 const Engineer = require('../lib/Engineer.js');
-const Employee = require('../lib/Employee');
+
 
 test ("can set github account to constructor argument", () => {
     const testValue = "Githubname";
@@ -11,7 +11,7 @@ test ("can set github account to constructor argument", () => {
 test ("Can get Githubname to getGithub", () => {
     const testValue = "Githubname";
     const employee = new Engineer ("Foo", 1, "test@test.com", "Githubname");
-    expect(employee.getGithub()).toBe(testValue)
+    expect(employee.getGithub()).toBe(testValue);
 
 });
 
