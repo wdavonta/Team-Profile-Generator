@@ -1,5 +1,5 @@
 const Manager = require('../lib/Manager.js');
-const Employee = require('../lib/Employee');
+
 
 
 test("Can set office number constructor arguement", () => {
@@ -7,7 +7,7 @@ test("Can set office number constructor arguement", () => {
     const employee = new Manager ("Foo", 1, "test@test.com", testValue);
     expect(employee.officeNumber).toBe(testValue);
 
-})
+});
     
 test("getRole() should return \"Manager\"", ()=> {
     const testValue = "Manager";
