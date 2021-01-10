@@ -4,12 +4,12 @@ const Engineer = require ('../lib/Manager');
 const Intern = require ('../lib/Intern');
 
 
-const generateCard = teamInfo => {
+const generateCard = team => {
 
   
 
 
-    const manager = teamInfo.manager.map (function(employee) {
+    const Manager = team.manager.map (function(employee) {
         let managerHTML = `
         <div class ="">
         <h2>${employee.name}</h2>
@@ -22,7 +22,7 @@ const generateCard = teamInfo => {
         return managerHTML
     });
 
-    const engineer = teamInfo.engineer.map (function(employee) {
+    const Engineer = team.engineer.map (function(employee) {
         let engineerHTML = `
         <div class ="">
         <h2>${employee.name}</h2>
@@ -35,7 +35,7 @@ const generateCard = teamInfo => {
         return engineerHTML
     });
 
-    const intern = teamInfo.intern.map (function(employee) {
+    const Intern = team.intern.map (function(employee) {
         let internHTML = `
         <div class ="">
         <h2>${employee.name}</h2>
@@ -48,7 +48,7 @@ const generateCard = teamInfo => {
         return internHTML
 })
 
-return [manager, engineer, intern]
+return [Manager, Engineer, Intern]
 
 
 }
@@ -56,7 +56,7 @@ return [manager, engineer, intern]
 
     
 module.exports = templateData => {
-
+    
     return `
     <!DOCTYPE html>
     <html lang="en">
@@ -70,10 +70,13 @@ module.exports = templateData => {
         <body>
             <header>
             <h1 class="text-center">Welcome Team</h1>
-                    ${generateCard(templateData)}   
+                    ${generateCard(templateData)}  
+                    
+                    
         </body> 
     </html>
 `
+
 }
 
 
